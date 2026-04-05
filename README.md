@@ -1,101 +1,221 @@
-# CodeTech Movie Recommendation System Task
+# 🎬 Movie Recommendation System (Collaborative Filtering)
 
-### **Company:** CodeTech IT Solutions
-### **Name:** Hrishikesh Divekar
-### **Intern:** CT04DF2569
-### **Domain:** Machine Learning
-### **Duration:** 4 weeks
-### **Mentor:** Neela Santhosh
+## 📌 Overview
 
-### **Description:**
-#### **1. IDE:** Visual Studio Code
-#### **2. Tools:** ChatGPT, Perplexity, Gemini, YouTube, quickref, GeekForGeeks, TutorialsPoint, etc.  
-#### **3. Applications:**
-#### **1. Applications of Movie Recommendation Technology**
-- Personalized User Experience:
-    - Suggesting movies tailored to individual user tastes.
-    - Enhancing satisfaction and reducing decision fatigue.
-    - Example: Netflix's "Because you watched..." feature.
-- Increased Content Consumption:
-    - Guiding users to new and relevant movies they might enjoy.
-    - Driving watch time and subscription retention.
-    - > "Recommendations account for a significant portion of our viewership."
-- Content Discovery and Exposure:
-    - Helping lesser-known but high-quality movies find an audience.
-    - Diversifying user viewing habits.
-    - Consider this: movie_genre = &quot;sci-fi&quot;
-- Marketing and Promotion:
-    - Targeted advertising for new movie releases.
-    - Promoting specific content to relevant user segments.
-    - Imagine: {&quot;promo_type&quot;: &quot;new_release&quot;, &quot;target_audience&quot;: &quot;action_fans&quot;}
-- Inventory Management for Streaming Services:
-    - Understanding which movies are popular and which are underperforming.
-    - Informing content acquisition and licensing decisions.
-    - Task: - [x] Analyze viewership data for Q3.
-- User Churn Prevention:
-    - Keeping users engaged by continuously offering appealing content.
-    - Reducing the likelihood of subscription cancellations.
-- A/B Testing and Optimization:
-    - Experimenting with different recommendation algorithms.
-    - Optimizing system parameters for best performance.
+This project implements a **Movie Recommendation System** using collaborative filtering techniques on a synthetic dataset. It demonstrates how to build, evaluate, and analyze recommendation models using matrix factorization and similarity-based approaches.
+
+The notebook covers the full pipeline:
+
+* Data generation
+* Exploratory data analysis (EDA)
+* Data transformation into sparse matrices
+* Model training (NMF, SVD)
+* Similarity computation
+* Evaluation using regression metrics
+
+The system is designed to simulate real-world recommendation engines like those used by streaming platforms.
+
 ---
-#### **2. Future Use Cases for Movie Recommendation Systems**
-- Interactive Storytelling and Adaptive Narratives:
-    - Recommending plot branches or character interactions in real-time.
-    - Based on viewer choices and emotional responses.
-    - Use Case: Personalized movie experiences in VR/AR.
-- Cross-Platform Content Integration:
-    - Recommending movies based on user activity across different media.
-    - Example: Suggesting a film adaptation after reading a book.
-    - function get_recommendation(user_data) { /- API call -/ return &quot;movie_id&quot;; }
-- Social Viewing and Group Recommendations:
-    - Suggesting movies that appeal to multiple users watching together.
-    - Resolving conflicts in group preferences.
-    - Imagine: A system for family movie night suggestions.
-- Personalized Learning and Educational Content:
-    - Recommending educational videos or documentaries.
-    - Based on learning styles, progress, and interests.
-- Mental Well-being and Mood Regulation:
-    - Suggesting movies or shows that align with or help improve a user's mood.
-    - Using sentiment analysis of user input or biometric data.
-    - Goal: Curated comfort viewing during stressful times.
-- AI-Assisted Content Creation:
-    - Providing feedback to filmmakers on potential audience reception.
-    - Recommending elements (e.g., themes, actors) for new productions.
-    - Feedback: &quot;Audience prefers happy endings.&quot;
+
+## ⚙️ Technical Stack
+
+* **Language:** Python
+* **Libraries:**
+
+  * `NumPy`, `Pandas` – data handling
+  * `Matplotlib`, `Seaborn` – visualization
+  * `SciPy` – sparse matrix operations
+  * `Scikit-learn` – ML models & evaluation
+* **Techniques Used:**
+
+  * Collaborative Filtering
+  * Matrix Factorization (NMF, SVD)
+  * Cosine Similarity
+  * Sparse Matrix Optimization
+
 ---
-#### **3. Future Developments in Movie Recommendation Projects**
-- Deep Learning and Neural Collaborative Filtering:
-    - Moving beyond traditional matrix factorization to neural networks.
-    - Goal: Capturing complex, non-linear relationships in user-item interactions.
-    - Leveraging architectures like Autoencoders and Graph Neural Networks.
-- Explainable Recommendations (XAI):
-    - Providing justifications for why a movie was recommended.
-    - Example: "Because you enjoyed similar action movies like 'Die Hard'."
-    - Building user trust and allowing for informed choices.
-    - Explanation: &quot;Recommended due to high ratings from similar users.&quot;
-- Fairness and Bias Mitigation:
-    - Developing algorithms that ensure diverse and equitable recommendations.
-    - Addressing biases related to gender, race, or popularity.
-    - Goal: Preventing filter bubbles and promoting broader content exposure.
-    - Checklist: - [ ] Evaluate demographic fairness - [ ] Implement diversity metrics.
-- Real-time and Context-Aware Recommendations:
-    - Adapting recommendations instantly based on current context.
-    - Factors include time of day, device, location, and even mood.
-    - Scenario: Suggesting a light comedy on a Friday evening.
-    - Latency: < 50ms for real-time updates.
-- Reinforcement Learning for Long-term Engagement:
-    - Training recommendation agents to optimize for long-term user satisfaction.
-    - Beyond immediate clicks, considering watch completion and repeat engagement.
-    - Method: RL_agent.learn_optimal_policy()
-- Multi-Task Learning and Transfer Learning:
-    - Leveraging knowledge from related tasks or domains.
-    - For example: Using data from music recommendations to improve movie suggestions.
-    - Especially beneficial for cold-start users or new content.
-- Privacy-Preserving Recommendations:
-    - Implementing techniques like Federated Learning or Differential Privacy.
-    - Allowing model training without direct access to sensitive user data.
-    - Privacy: User data remains encrypted.
-- Generative Recommendation Models:
-    - Creating novel content ideas or mashups based on user preferences.
-    - Vision: AI designing a movie trailer tailored to an individual.
+
+## 📊 Dataset
+
+The dataset is **synthetically generated** to mimic real-world movie rating behavior.
+
+### Key Characteristics:
+
+* **Users:** 1000
+* **Movies:** 500
+* **Ratings:** ~47,574 (after deduplication) 
+* **Rating Scale:** 1–5
+* **Distribution Bias:** Higher probability for ratings 3–5
+
+### Features:
+
+* `user_id` – unique user identifier
+* `movie_id` – unique movie identifier
+* `rating` – user rating for a movie
+
+---
+
+## 🔍 Data Exploration
+
+Basic statistical insights:
+
+* **Average Rating:** ~3.35 
+* **Standard Deviation:** ~1.24 
+* **Sparsity:** ~90.49% 
+
+High sparsity reflects real-world recommender systems where users rate only a small subset of items.
+
+---
+
+## 🏗️ System Architecture
+
+### 1. Data Generation
+
+* Random user–movie interactions
+* Probabilistic rating distribution
+* Duplicate removal for consistency
+
+### 2. Data Transformation
+
+* Convert dataset into **user-item matrix**
+* Use **CSR (Compressed Sparse Row)** format for efficiency
+
+### 3. Model Training
+
+#### a. Matrix Factorization
+
+* **NMF (Non-negative Matrix Factorization)**
+* **Truncated SVD**
+
+These methods decompose the user-item matrix into latent factors:
+
+* User preferences
+* Movie characteristics
+
+#### b. Similarity-Based Filtering
+
+* Compute **cosine similarity** between:
+
+  * Users (user-based filtering)
+  * Items (item-based filtering)
+
+---
+
+## 🧠 Recommendation Logic
+
+### Approach 1: User-Based Collaborative Filtering
+
+1. Find similar users
+2. Recommend movies liked by similar users
+
+### Approach 2: Item-Based Collaborative Filtering
+
+1. Find similar movies
+2. Recommend movies similar to those already rated
+
+### Approach 3: Latent Factor Models
+
+* Use NMF/SVD embeddings
+* Predict missing ratings
+
+---
+
+## 📈 Model Evaluation
+
+The system uses regression-based evaluation metrics:
+
+* **Mean Squared Error (MSE)**
+* **Mean Absolute Error (MAE)**
+
+These metrics evaluate how well predicted ratings match actual ratings.
+
+---
+
+## 🔄 Workflow
+
+```
+Data Generation → Cleaning → EDA → Matrix Conversion
+        ↓
+Model Training (NMF / SVD / Similarity)
+        ↓
+Prediction & Recommendation
+        ↓
+Evaluation (MSE, MAE)
+```
+
+---
+
+## 🧩 Custom User Input (Extensibility)
+
+The system can be extended to accept **real user input**:
+
+### Input Options:
+
+* New user ratings (e.g., rate 5–10 movies)
+* User ID selection
+* Movie preference filtering
+
+### Example:
+
+```python
+new_user_ratings = {
+    movie_id_1: 5,
+    movie_id_2: 3,
+    movie_id_3: 4
+}
+```
+
+### Output:
+
+* Top-N recommended movies
+* Similar users/items
+* Predicted ratings
+
+---
+
+## 🚀 How to Run
+
+1. Install dependencies:
+
+```bash
+pip install numpy pandas matplotlib seaborn scikit-learn scipy
+```
+
+2. Run the notebook:
+
+```bash
+jupyter notebook
+```
+
+3. Execute all cells step-by-step
+
+---
+
+## 📌 Key Features
+
+* End-to-end recommendation pipeline
+* Sparse matrix optimization
+* Multiple recommendation strategies
+* Scalable to real-world datasets
+* Easily extendable for production systems
+
+---
+
+## ⚠️ Limitations
+
+* Uses synthetic data (not real-world dataset)
+* Cold-start problem not addressed
+* No content-based filtering
+* No real-time updates
+
+---
+
+## 🔮 Future Improvements
+
+* Integrate real datasets (e.g., MovieLens)
+* Add hybrid recommendation (content + collaborative)
+* Implement deep learning models
+* Build API / UI for deployment
+* Handle cold-start users/items
+
+---
